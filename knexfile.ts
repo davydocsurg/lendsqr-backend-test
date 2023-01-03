@@ -1,17 +1,26 @@
+import dotenv from "dotenv";
 import type { Knex } from "knex";
+
+// local imports
 import { DB_PORT } from "./config";
 
 // Update with your config settings.
 
-export const config: { [key: string]: Knex.Config } = {
+dotenv.config();
+const KnexConfig: { [key: string]: Knex.Config } = {
     development: {
         client: "mysql",
         connection: {
-            filename: "config/database.ts",
-            // database: process.env.DB_NAME,
-            // user: process.env.DB_USER,
-            // password: process.env.DB_PASSWORD,
+            // host: "127.0.0.1", //process.env.DB_HOST,
+            // database: "demo-wallet", //process.env.DB_NAME,
+            // user: "root", //process.env.DB_USER,
+            // password: "root", //process.env.DB_PASSWORD,
             // port: DB_PORT || process.env.DB_PORT,
+            host: process.env.DB_HOST,
+            database: process.env.DB_NAME,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            port: DB_PORT || process.env.DB_PORT,
         },
         migrations: {
             directory: "./src/database/migrations",
@@ -19,7 +28,9 @@ export const config: { [key: string]: Knex.Config } = {
         },
         seeds: {
             directory: "./src/database/seeds",
+            extension: "ts",
         },
+        useNullAsDefault: true,
     },
 
     staging: {
@@ -55,4 +66,4 @@ export const config: { [key: string]: Knex.Config } = {
     },
 };
 
-// module.exports = config;
+export default KnexConfig;

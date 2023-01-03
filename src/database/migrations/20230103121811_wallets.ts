@@ -6,11 +6,12 @@ export async function up(knex: Knex): Promise<void> {
         table.string("address").notNullable().unique();
         table.string("balance").nullable();
         table
-            .string("user_id")
-            .unique()
+            .integer("user_id")
+            .unsigned()
             .notNullable()
             .references("id")
-            .inTable("users");
+            .inTable("users")
+            .onDelete("CASCADE");
         table.timestamp("created_at").defaultTo(knex.fn.now());
         table.timestamp("updated_at").defaultTo(knex.fn.now());
     });
