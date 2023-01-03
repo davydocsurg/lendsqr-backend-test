@@ -11,11 +11,6 @@ const KnexConfig: { [key: string]: Knex.Config } = {
     development: {
         client: "mysql",
         connection: {
-            // host: "127.0.0.1", //process.env.DB_HOST,
-            // database: "demo-wallet", //process.env.DB_NAME,
-            // user: "root", //process.env.DB_USER,
-            // password: "root", //process.env.DB_PASSWORD,
-            // port: DB_PORT || process.env.DB_PORT,
             host: process.env.DB_HOST,
             database: process.env.DB_NAME,
             user: process.env.DB_USER,
