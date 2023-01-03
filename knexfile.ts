@@ -7,11 +7,11 @@ export const config: { [key: string]: Knex.Config } = {
     development: {
         client: "mysql",
         connection: {
-            // filename: "config/database.ts",
-            database: process.env.DB_NAME,
-            user: process.env.DB_USER,
-            password: process.env.DB_PASSWORD,
-            port: DB_PORT || process.env.DB_PORT,
+            filename: "config/database.ts",
+            // database: process.env.DB_NAME,
+            // user: process.env.DB_USER,
+            // password: process.env.DB_PASSWORD,
+            // port: DB_PORT || process.env.DB_PORT,
         },
         migrations: {
             directory: "./src/database/migrations",
