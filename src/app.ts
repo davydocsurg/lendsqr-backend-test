@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import cors from "cors";
 import path from "path";
+import { ErrorHandler } from "./middleware";
 
 const app: Express = express();
 const allowlist = ["http://localhost:3000", process.env.FRONT_END_URL];
@@ -31,5 +32,6 @@ app.get("/api/", (res: Response) => {
 });
 
 app.use(express.static(path.join(__dirname, "public")));
+app.use(ErrorHandler);
 
 export default app;
