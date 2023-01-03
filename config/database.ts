@@ -6,7 +6,7 @@ export const createKnexConnection = async () => {
     Logger.info("Creating knex connection...");
 
     try {
-        knex({
+        const dbConnection = knex({
             client: "mysql",
             connection: {
                 host: process.env.DB_HOST,
@@ -17,6 +17,7 @@ export const createKnexConnection = async () => {
             },
         });
         Logger.info("Knex connection created successfully!");
+        return dbConnection;
     } catch (error: any) {
         Logger.error("An error occured: " + error);
         throw new Error(error);
