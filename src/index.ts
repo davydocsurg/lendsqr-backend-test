@@ -1,9 +1,10 @@
 import dotenv from "dotenv";
-import { createKnexConnection } from "../config";
+
 dotenv.config();
 // locals
 import app from "./app";
 import { Logger } from "./helpers";
+import { createKnexConnection } from "../config";
 
 // Uncaught Exceptions
 process.on("uncaughtException", (err) => {
@@ -12,6 +13,7 @@ process.on("uncaughtException", (err) => {
 });
 
 createKnexConnection();
+
 if (!process.env.APP_PORT) {
     process.exit(1);
 }

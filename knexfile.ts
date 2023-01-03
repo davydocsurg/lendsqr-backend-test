@@ -1,15 +1,21 @@
 import type { Knex } from "knex";
+import { DB_PORT } from "./config";
 
 // Update with your config settings.
 
-const config: { [key: string]: Knex.Config } = {
+export const config: { [key: string]: Knex.Config } = {
     development: {
         client: "mysql",
         connection: {
-            filename: "./config/database.ts",
+            // filename: "config/database.ts",
+            database: process.env.DB_NAME,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            port: DB_PORT || process.env.DB_PORT,
         },
         migrations: {
             directory: "./src/database/migrations",
+            extension: "ts",
         },
         seeds: {
             directory: "./src/database/seeds",
@@ -49,4 +55,4 @@ const config: { [key: string]: Knex.Config } = {
     },
 };
 
-module.exports = config;
+// module.exports = config;
