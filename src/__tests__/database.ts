@@ -1,5 +1,5 @@
-import { Knex as Knextype, knex } from "knex";
-// import * as Knex from "knex";
+import { Knex as Knextype } from "knex";
+// import * as knex from "knex";
 // import { destroy } from "knex/lib";
 
 // local imports

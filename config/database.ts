@@ -16,6 +16,7 @@ export const createKnexConnection = async () => {
                 database: process.env.DB_NAME,
             },
         });
+
         Logger.info("Knex connection created successfully!");
         return dbConnection;
     } catch (error: any) {
