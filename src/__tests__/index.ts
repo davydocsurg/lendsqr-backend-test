@@ -3,7 +3,7 @@ import app from "../app";
 
 describe("test the root path", () => {
     test("should GET the index path", async () => {
-        const response = await request(app).get("/");
+        const response = await request(app).get("/api/");
         return expect(response.statusCode).toBe(200);
     });
 });
