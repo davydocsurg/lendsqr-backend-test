@@ -22,7 +22,10 @@ class User {
     }
 }
 
-export const create = async (knex: Knex.Knex, user: User): Promise<void> => {
+export const createUser = async (
+    knex: Knex.Knex,
+    user: User
+): Promise<void> => {
     await knex("users").insert([
         {
             id: user.id,

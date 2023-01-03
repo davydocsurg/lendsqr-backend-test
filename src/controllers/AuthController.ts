@@ -1,16 +1,16 @@
 import * as Knex from "knex";
-import { create, User } from "../models";
+import { createUser, User } from "../models";
 import { Response } from "express";
 import { Logger } from "../helpers";
 
-class UserController {
+class AuthController {
     constructor() {
-        this.createUser = this.createUser.bind(this);
+        this.register = this.register.bind(this);
     }
 
-    async createUser(knex: Knex.Knex, user: User, res: Response) {
+    async register(knex: Knex.Knex, user: User, res: Response) {
         try {
-            await create(knex, user);
+            await createUser(knex, user);
             return res.status(201).json({
                 success: true,
                 data: null,
@@ -22,4 +22,4 @@ class UserController {
     }
 }
 
-export default new UserController();
+export default new AuthController();
