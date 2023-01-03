@@ -19,11 +19,11 @@ const corsOptionsDelegate = function (
 
 app.use(cors(corsOptionsDelegate));
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // test index route
-app.get("/", (res: Response) => {
+app.get("/api/", (res: Response) => {
     res.status(200).json({
         message: "You have reached Demo Credit API index page",
         success: true,
