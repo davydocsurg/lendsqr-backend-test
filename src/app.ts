@@ -4,6 +4,7 @@ import path from "path";
 
 // local imports
 import { ErrorHandler } from "./middleware";
+import { authRoutes } from "./routes";
 
 const app: Express = express();
 const allowlist = ["http://localhost:3000", process.env.FRONT_END_URL];
@@ -34,6 +35,8 @@ app.get("/api/", (req: Request, res: Response) => {
 });
 
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use("/api", authRoutes);
 app.use(ErrorHandler);
 
 export default app;
