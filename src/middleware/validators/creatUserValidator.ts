@@ -33,6 +33,12 @@ const ValidateCreateUserRequest = (
                     checkFalsy: true,
                 })
                 .withMessage("Password is required"),
+            check("passwordConfirmation")
+                .exists({
+                    checkNull: true,
+                    checkFalsy: true,
+                })
+                .withMessage("Password Confirmation field is required"),
         ],
         req,
         res,

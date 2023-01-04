@@ -1,20 +1,20 @@
 import * as Knex from "knex";
 
 class User {
-    id: number;
+    // id?: number;
     first_name: string;
     last_name: string;
     email: string;
     password: string;
 
     constructor(
-        id: number,
+        // id?: number,
         first_name: string,
         last_name: string,
         email: string,
         password: string
     ) {
-        this.id = id;
+        // this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
@@ -24,15 +24,15 @@ class User {
 
 export const createUser = async (
     knex: Knex.Knex,
-    user: User
+    userInput: User
 ): Promise<void> => {
     await knex("users").insert([
         {
-            id: user.id,
-            first_name: user.first_name,
-            last_name: user.last_name,
-            email: user.email,
-            password: user.password,
+            // id: userInput.id,
+            first_name: userInput.first_name,
+            last_name: userInput.last_name,
+            email: userInput.email,
+            password: userInput.password,
         },
     ]);
 };
