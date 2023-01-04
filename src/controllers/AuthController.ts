@@ -6,6 +6,7 @@ import { createUser, createWallet, User } from "../models";
 import {
     AppError,
     checkUser,
+    createUserToken,
     findUserByEmail,
     generateWalletAddress,
     Logger,
@@ -14,6 +15,7 @@ import {
 class AuthController {
     constructor() {
         this.register = this.register.bind(this);
+        this.login = this.login.bind(this);
         this.createUserWallet = this.createUserWallet.bind(this);
     }
 
@@ -63,8 +65,34 @@ class AuthController {
         const userData = findUserByEmail(email);
         const walletAddress = generateWalletAddress();
         Logger.info("Wallet Address: " + walletAddress + userData);
-        let balance = 100;
+        let balance = 0;
         await createWallet((await userData).id, walletAddress, balance);
+    }
+
+    async login(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { email, password } = req.body;
+
+            const userExists = await findUserByEmail(email);
+
+            if (!userExists) {
+                return next(new AppError("Invalid Credentials", 401));
+            }
+
+            const token = createUserToken(userExists, 200, res);
+
+            return res.status(200).json({
+                success: true,
+                data: { token, user: userExists },
+                message: "Login successful",
+            });
+        } catch (error: unknown) {
+            Logger.error("An error occured: " + error);
+            return res.json({
+                success: false,
+                message: error,
+            });
+        }
     }
 }
 

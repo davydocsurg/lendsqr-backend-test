@@ -1,3 +1,5 @@
+import bcrypt from "bcryptjs";
+
 import { createKnexConnection } from "../../config";
 
 // types
@@ -14,11 +16,27 @@ export const checkUser = async (email: string): Promise<boolean> => {
     return false;
 };
 
-export const findUserByEmail = async (email: string): Promise<UserType> => {
+export const findUserByEmail = async (
+    email: string
+): Promise<UserType | any> => {
     const knex = await createKnexConnection();
 
     const user = await knex!("users").select().where({ email: email });
-    // if (user.length > 0) {
-    return user[0];
-    // }
+    if (user.length > 0) {
+        return user[0];
+    }
+    return null;
+};
+
+export const comparePassword = async (
+    user: UserType,
+    password: string
+): Promise<boolean> => {
+    const comparePwd = await bcrypt.compare(password, user.password);
+
+    if (!comparePwd) {
+        return false;
+    }
+
+    return true;
 };
