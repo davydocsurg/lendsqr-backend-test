@@ -1,4 +1,4 @@
-import * as Knex from "knex";
+import { Knex } from "knex";
 import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcryptjs";
 
@@ -12,15 +12,12 @@ class AuthController {
     }
 
     async register(
-        knex: Knex.Knex,
         req: Request,
         res: Response,
-        next: NextFunction
+        next: NextFunction,
+        knex: Knex
     ) {
         try {
-            Logger.warn(req.headers);
-            return;
-
             const first_name = req.body.first_name;
             const last_name = req.body.last_name;
             const email = req.body.email;
@@ -29,11 +26,13 @@ class AuthController {
 
             const userExists = await checkUser(knex, email);
             if (userExists) {
+                Logger.warn("User already exist");
                 return res.status(409).json({
                     success: false,
                     message: "User Already Exist. Please Login",
                 });
             }
+            Logger.error("still got here");
 
             if (password !== passwordConfirmation) {
                 return res.json({

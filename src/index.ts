@@ -1,10 +1,12 @@
 import dotenv from "dotenv";
+
 // locals
 import app from "./app";
 import { Logger } from "./helpers";
 import { createKnexConnection } from "../config";
 
 dotenv.config();
+
 // Uncaught Exceptions
 process.on("uncaughtException", (err) => {
     Logger.error(err);

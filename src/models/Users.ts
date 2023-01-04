@@ -1,4 +1,4 @@
-import * as Knex from "knex";
+import { Knex } from "knex";
 
 class User {
     // id?: number;
@@ -23,7 +23,7 @@ class User {
 }
 
 export const createUser = async (
-    knex: Knex.Knex,
+    knex: Knex,
     userInput: User
 ): Promise<void> => {
     await knex("users").insert([
