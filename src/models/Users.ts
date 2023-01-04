@@ -1,4 +1,5 @@
-import { Knex } from "knex";
+import { createKnexConnection } from "../../config";
+import { Logger } from "../helpers";
 
 class User {
     // id?: number;
@@ -22,13 +23,10 @@ class User {
     }
 }
 
-export const createUser = async (
-    knex: Knex,
-    userInput: User
-): Promise<void> => {
-    await knex("users").insert([
+export const createUser = async (userInput: User): Promise<void> => {
+    const knex = await createKnexConnection();
+    await knex!("users").insert([
         {
-            // id: userInput.id,
             first_name: userInput.first_name,
             last_name: userInput.last_name,
             email: userInput.email,
