@@ -1,3 +1,4 @@
-import User, { createUser } from "./Users";
+import User, { createUser } from "./User";
+import Wallet, { createWallet } from "./Wallet";
 
-export { createUser, User };
+export { createUser, createWallet, User, Wallet };

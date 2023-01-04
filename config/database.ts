@@ -1,6 +1,11 @@
 import * as Knex from "knex";
+import dotenv from "dotenv";
+
+// local imports
 import KnexConfig from "../knexfile";
 import { Logger } from "../src/helpers";
+
+dotenv.config();
 
 export const createKnexConnection = async () => {
     Logger.info("Creating knex connection...");
@@ -14,7 +19,6 @@ export const createKnexConnection = async () => {
         if (dbHandshake) {
             Logger.success("Knex connection created successfully!");
         }
-
         return knex;
     } catch (error: any) {
         Logger.error("An error occured: " + error);

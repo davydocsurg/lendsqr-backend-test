@@ -9,13 +9,19 @@ import { DB_PORT } from "./config";
 dotenv.config();
 const KnexConfig: { [key: string]: Knex.Config } = {
     development: {
-        client: "mysql",
+        client: process.env.DB_CLIENT,
         connection: {
             host: process.env.DB_HOST,
             database: process.env.DB_NAME,
             user: process.env.DB_USER,
             password: process.env.DB_PASSWORD,
             port: DB_PORT || process.env.DB_PORT,
+            timezone: "Z",
+            stringifyObjects: true,
+        },
+        pool: {
+            min: 2,
+            max: 20,
         },
         migrations: {
             directory: "./src/database/migrations",
