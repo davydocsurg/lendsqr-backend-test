@@ -6,6 +6,7 @@ import { createUser, createWallet, User } from "../models";
 import {
     AppError,
     checkUser,
+    comparePassword,
     createUserToken,
     findUserByEmail,
     generateWalletAddress,
@@ -74,8 +75,12 @@ class AuthController {
             const { email, password } = req.body;
 
             const userExists = await findUserByEmail(email);
+            const validatePassword = await comparePassword(
+                userExists,
+                password
+            );
 
-            if (!userExists) {
+            if (!userExists || !validatePassword) {
                 return next(new AppError("Invalid Credentials", 401));
             }
 
