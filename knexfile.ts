@@ -9,7 +9,7 @@ import { DB_PORT } from "./config";
 dotenv.config();
 const KnexConfig: { [key: string]: Knex.Config } = {
     development: {
-        client: "mysql2",
+        client: process.env.DB_CLIENT,
         connection: {
             host: process.env.DB_HOST,
             database: process.env.DB_NAME,

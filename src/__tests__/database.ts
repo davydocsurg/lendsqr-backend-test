@@ -1,4 +1,3 @@
-import * as Knex from "knex";
 // import { destroy } from "knex/lib";
 
 // local imports

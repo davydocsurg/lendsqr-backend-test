@@ -2,12 +2,19 @@ import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcryptjs";
 
 // local imports
-import { createUser, User } from "../models";
-import { checkUser, Logger } from "../helpers";
+import { createUser, createWallet, User } from "../models";
+import {
+    AppError,
+    checkUser,
+    findUserByEmail,
+    generateWalletAddress,
+    Logger,
+} from "../helpers";
 
 class AuthController {
     constructor() {
         this.register = this.register.bind(this);
+        this.createUserWallet = this.createUserWallet.bind(this);
     }
 
     async register(req: Request, res: Response, next: NextFunction) {
@@ -28,10 +35,7 @@ class AuthController {
             }
 
             if (password !== passwordConfirmation) {
-                return res.json({
-                    success: false,
-                    message: "Password does not match. Check and try again",
-                });
+                return next(new AppError("Password does not match", 400));
             }
 
             const hashedPassword = await bcrypt.hash(password, 12);
@@ -43,6 +47,8 @@ class AuthController {
             };
 
             await createUser(userInput);
+
+            await this.createUserWallet(email);
             return res.status(201).json({
                 success: true,
                 data: null,
@@ -51,6 +57,14 @@ class AuthController {
         } catch (error: unknown) {
             Logger.error("An error occured: " + error);
         }
+    }
+
+    async createUserWallet(email: string) {
+        const userData = findUserByEmail(email);
+        const walletAddress = generateWalletAddress();
+        Logger.info("Wallet Address: " + walletAddress + userData);
+        let balance = 100;
+        await createWallet((await userData).id, walletAddress, balance);
     }
 }
 
