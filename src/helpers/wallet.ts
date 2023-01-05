@@ -38,3 +38,13 @@ export const isAmountLessThanTwoDollar = (
     }
     return;
 };
+
+export const isAmountLessThanOneDollar = (
+    amount: number,
+    next: NextFunction
+): void => {
+    if (amount < 1) {
+        return next(new AppError("Amount must be greater than $1", 400));
+    }
+    return;
+};

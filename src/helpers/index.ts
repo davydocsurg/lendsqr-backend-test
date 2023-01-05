@@ -10,7 +10,7 @@ import {
 import { createUserToken } from "./auth";
 import { comparePassword } from "./user";
 import getKnexInstance from "./KnexInstance";
-import { isAmountLessThanTwoDollar } from "./wallet";
+import { isAmountLessThanTwoDollar, isAmountLessThanOneDollar } from "./wallet";
 
 export {
     AppError,
@@ -24,4 +24,5 @@ export {
     getKnexInstance,
     isAmountLessThanTwoDollar,
     compareWalletBalanceWithAmount,
+    isAmountLessThanOneDollar,
 };
