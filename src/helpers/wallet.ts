@@ -26,5 +26,5 @@ export const isAmountLessThanTwoDollar = (
     if (amount < 2) {
         return next(new AppError("Amount must be greater than $1", 400));
     }
-    return next();
+    return;
 };

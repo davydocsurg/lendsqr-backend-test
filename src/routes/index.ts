@@ -1,4 +1,4 @@
-import authRoutes from "./auth.routes";
+import authRoutes from "./auth.route";
 import walletRoutes from "./wallet.route";
 
 export { authRoutes, walletRoutes };

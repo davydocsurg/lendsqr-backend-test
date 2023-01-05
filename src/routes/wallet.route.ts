@@ -8,7 +8,7 @@ const walletRoutes = express.Router();
 walletRoutes.post(
     "/fund-my-wallet",
     isAuthenticated,
-    verifyAmount,
+    // verifyAmount,
     catchAsync(WalletController.fundAuthUserWallet)
 );
 

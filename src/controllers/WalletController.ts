@@ -25,13 +25,9 @@ class WalletController {
         try {
             const { amount } = req.body;
             const { id } = req.user[0];
+
             const wallet = await findUserWallet(id, next);
 
-            // if (amount < 2) {
-            //     return next(
-            //         new AppError("Amount must be greater than $1", 400)
-            //     );
-            // }
             isAmountLessThanTwoDollar(amount, next);
 
             let updateType = "add";
@@ -69,6 +65,13 @@ class WalletController {
             const userExists = await findUserByEmail(email);
             if (!userExists) {
                 return next(new AppError("User does not exist", 404));
+            } else if (userExists.email === req.user[0].email) {
+                return next(
+                    new AppError(
+                        "Can't transfer funds to yourself. Fund your account instead",
+                        400
+                    )
+                );
             }
 
             // check if auth user has sufficient funds

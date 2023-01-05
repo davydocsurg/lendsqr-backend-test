@@ -74,12 +74,15 @@ class AuthController {
             const { email, password } = req.body;
 
             const userExists = await findUserByEmail(email);
+            if (!userExists) {
+                return next(new AppError("Invalid Credentials", 401));
+            }
+
             const validatePassword = await comparePassword(
                 userExists,
                 password
             );
-
-            if (!userExists || !validatePassword) {
+            if (!validatePassword) {
                 return next(new AppError("Invalid Credentials", 401));
             }
 
