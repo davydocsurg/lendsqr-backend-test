@@ -5,6 +5,7 @@ import {
     AppError,
     checkWalletBalance,
     compareWalletBalanceWithAmount,
+    isAmountLessThanOneDollar,
     isAmountLessThanTwoDollar,
     Logger,
 } from "../helpers";
@@ -21,6 +22,7 @@ class WalletController {
         this.fundAuthUserWallet = this.fundAuthUserWallet.bind(this);
         this.transferFundsToAnotherUser =
             this.transferFundsToAnotherUser.bind(this);
+        this.withdrawFunds = this.withdrawFunds.bind(this);
     }
 
     async fundAuthUserWallet(req: Request, res: Response, next: NextFunction) {
@@ -96,6 +98,43 @@ class WalletController {
                     sender: `Your transaction was successful. $${amount} have been deducted from your wallet`,
                     receiver: `$${amount} have been transfered to your wallet`,
                 },
+            });
+        } catch (error: unknown) {
+            Logger.error("An error occured: " + error);
+            return res.json({
+                success: false,
+                errors: error,
+            });
+        }
+    }
+
+    async withdrawFunds(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { amount } = req.body;
+            const { id } = req.user[0];
+
+            const wallet = await findUserWallet(id, next);
+
+            isAmountLessThanOneDollar(amount, next);
+
+            const sufficientFunds = await compareWalletBalanceWithAmount(
+                wallet?.balance!,
+                amount
+            );
+            if (!sufficientFunds) {
+                return next(new AppError("Insufficient Funds", 400));
+            }
+
+            let updateType = "deduct";
+            const newBalance = await updateWalletBalance(
+                wallet!,
+                amount,
+                updateType
+            );
+
+            return res.status(200).json({
+                success: true,
+                message: `Debit Amount: $${amount}. Your new balance is $${newBalance}`,
             });
         } catch (error: unknown) {
             Logger.error("An error occured: " + error);
