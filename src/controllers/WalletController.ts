@@ -11,11 +11,14 @@ import {
     findUserWallet,
     updateWalletBalance,
     findUserByEmail,
+    transferFunds,
 } from "../models";
 
 class WalletController {
     constructor() {
         this.fundAuthUserWallet = this.fundAuthUserWallet.bind(this);
+        this.transferFundsToAnotherUser =
+            this.transferFundsToAnotherUser.bind(this);
     }
 
     async fundAuthUserWallet(req: Request, res: Response, next: NextFunction) {
@@ -30,6 +33,7 @@ class WalletController {
             //     );
             // }
             isAmountLessThanTwoDollar(amount, next);
+
             let updateType = "add";
             const newBalance = await updateWalletBalance(
                 wallet!,
@@ -45,7 +49,7 @@ class WalletController {
             Logger.error("An error occured: " + error);
             return res.json({
                 success: false,
-                message: error,
+                errors: error,
             });
         }
     }
@@ -73,6 +77,17 @@ class WalletController {
             if (!sufficientFunds) {
                 return next(new AppError("Insufficient Funds", 400));
             }
+
+            // initiate transaction
+            await transferFunds(email, amount, next);
+
+            return res.status(201).json({
+                success: true,
+                message: {
+                    sender: `Your transaction was successful. $${amount} have been deducted from your wallet`,
+                    receiver: `$${amount} have been transfered to your wallet`,
+                },
+            });
         } catch (error: unknown) {
             Logger.error("An error occured: " + error);
             return res.json({

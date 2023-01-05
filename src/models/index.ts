@@ -3,6 +3,7 @@ import Wallet, {
     createWallet,
     findUserWallet,
     updateWalletBalance,
+    transferFunds,
 } from "./Wallet";
 
 export {
@@ -11,6 +12,7 @@ export {
     createWallet,
     findUserWallet,
     updateWalletBalance,
+    transferFunds,
     User,
     Wallet,
 };

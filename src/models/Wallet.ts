@@ -69,7 +69,7 @@ export const transferFunds = async (
     receiverEmail: string,
     amount: number,
     next: NextFunction
-): Promise<number | void> => {
+): Promise<void> => {
     // find receiver
     const receiver = await findUserByEmail(receiverEmail);
     if (!receiver) {
@@ -89,8 +89,6 @@ export const transferFunds = async (
         amount,
         receiverWalletUpdateType
     );
-
-    return amount;
 };
 
 export default Wallet;

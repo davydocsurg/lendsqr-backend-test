@@ -4,7 +4,7 @@ import { check } from "express-validator";
 // local imports
 import validate from "./validate";
 
-export const fundAuthWalletValidator = (
+export const verifyAmount = (
     req: Request,
     res: Response,
     next: NextFunction
