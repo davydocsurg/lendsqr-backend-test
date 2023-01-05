@@ -17,6 +17,9 @@
     ],
     "author": "David Ndubuisi",
     "license": "MIT",
+    "engines": {
+        "node": ">=17"
+    },
     "dependencies": {
         "@types/knex": "^0.16.1",
         "bcryptjs": "^2.4.3",
