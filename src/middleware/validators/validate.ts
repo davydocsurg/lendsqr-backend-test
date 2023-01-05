@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { validationResult, ValidationChain } from "express-validator";
-import HttpException from "../../commons/httpException";
+import { HttpException } from "../../commons";
 
 const validate = async (
     validations: ValidationChain[],
