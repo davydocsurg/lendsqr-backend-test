@@ -53,16 +53,22 @@ const KnexConfig: { [key: string]: Knex.Config } = {
     production: {
         client: "mysql",
         connection: {
-            host: process.env.PROD_DB_HOST,
-            database: process.env.PROD_DB_NAME,
-            user: process.env.PROD_DB_USER,
-            password: process.env.PROD_DB_PASSWORD,
-            port: PROD_DB_PORT || process.env.PROD_DB_PORT,
+            // host: process.env.PROD_DB_HOST,
+            // database: process.env.PROD_DB_NAME,
+            // user: process.env.PROD_DB_USER,
+            // password: process.env.PROD_DB_PASSWORD,
+            // port: PROD_DB_PORT || process.env.PROD_DB_PORT,
+
+            host: "db4free.net",
+            database: "lendsqrbetest",
+            user: "lendsqrbetest",
+            password: "ZG2cE2@yH@DqwDP",
+            port: PROD_DB_PORT,
         },
-        pool: {
-            min: 2,
-            max: 10,
-        },
+        // pool: {
+        //     min: 2,
+        //     max: 10,
+        // },
         migrations: {
             directory: "./src/database/migrations",
             extension: "ts",
