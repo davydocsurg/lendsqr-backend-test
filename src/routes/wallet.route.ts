@@ -23,4 +23,11 @@ walletRoutes.post(
     catchAsync(WalletController.transferFundsToAnotherUser)
 );
 
+walletRoutes.post(
+    "/withdraw-funds",
+    isAuthenticated,
+    verifyAmount,
+    catchAsync(WalletController.withdrawFunds)
+);
+
 export default walletRoutes;
