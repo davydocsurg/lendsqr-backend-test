@@ -1,5 +1,6 @@
 import { createKnexConnection } from "../../config";
 import { Logger } from "../helpers";
+import { UserType } from "../types";
 
 class User {
     id?: number;
@@ -33,6 +34,18 @@ export const createUser = async (userInput: User): Promise<void> => {
             password: userInput.password,
         },
     ]);
+};
+
+export const findUserByEmail = async (
+    email: string
+): Promise<UserType | any> => {
+    const knex = await createKnexConnection();
+
+    const user = await knex!("users").select().where({ email: email });
+    if (user.length > 0) {
+        return user[0];
+    }
+    return null;
 };
 
 export default User;

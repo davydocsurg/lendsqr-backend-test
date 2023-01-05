@@ -2,13 +2,12 @@ import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcryptjs";
 
 // local imports
-import { createUser, createWallet, User } from "../models";
+import { createUser, createWallet, findUserByEmail } from "../models";
 import {
     AppError,
     checkUser,
     comparePassword,
     createUserToken,
-    findUserByEmail,
     generateWalletAddress,
     Logger,
 } from "../helpers";
@@ -75,16 +74,20 @@ class AuthController {
             const { email, password } = req.body;
 
             const userExists = await findUserByEmail(email);
+            if (!userExists) {
+                return next(new AppError("Invalid Credentials", 401));
+            }
+
             const validatePassword = await comparePassword(
                 userExists,
                 password
             );
-
-            if (!userExists || !validatePassword) {
+            if (!validatePassword) {
                 return next(new AppError("Invalid Credentials", 401));
             }
 
             const token = createUserToken(userExists, 200, res);
+            req.user = userExists;
 
             return res.status(200).json({
                 success: true,

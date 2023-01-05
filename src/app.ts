@@ -1,10 +1,10 @@
-import express, { Express, Request, Response } from "express";
+import express, { Express, NextFunction, Request, Response } from "express";
 import cors from "cors";
 import path from "path";
 
 // local imports
 import { ErrorHandler } from "./middleware";
-import { authRoutes } from "./routes";
+import { authRoutes, walletRoutes } from "./routes";
 import { Logger } from "./helpers";
 
 const app: Express = express();
@@ -41,6 +41,7 @@ app.get("/api/", (req: Request, res: Response) => {
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api", authRoutes);
+app.use("/api", walletRoutes);
 app.use(ErrorHandler);
 
 export default app;
