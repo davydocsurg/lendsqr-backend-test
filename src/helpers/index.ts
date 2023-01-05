@@ -2,9 +2,10 @@ import Logger from "../helpers/customLogs";
 import catchAsync from "./catchAsync";
 import { checkUser, findUserByEmail } from "./user";
 import { AppError } from "./AppError";
-import { generateWalletAddress } from "./wallet";
+import { generateWalletAddress, checkWalletBalance } from "./wallet";
 import { createUserToken } from "./auth";
 import { comparePassword } from "./user";
+import getKnexInstance from "./KnexInstance";
 
 export {
     AppError,
@@ -13,6 +14,8 @@ export {
     checkUser,
     findUserByEmail,
     generateWalletAddress,
+    checkWalletBalance,
     createUserToken,
     comparePassword,
+    getKnexInstance,
 };

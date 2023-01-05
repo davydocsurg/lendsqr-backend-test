@@ -1,3 +1,4 @@
 import AuthController from "./AuthController";
+import WalletController from "./WalletController";
 
-export { AuthController };
+export { AuthController, WalletController };

@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcryptjs";
 
 // local imports
-import { createUser, createWallet, User } from "../models";
+import { createUser, createWallet } from "../models";
 import {
     AppError,
     checkUser,
@@ -85,6 +85,7 @@ class AuthController {
             }
 
             const token = createUserToken(userExists, 200, res);
+            req.user = userExists;
 
             return res.status(200).json({
                 success: true,

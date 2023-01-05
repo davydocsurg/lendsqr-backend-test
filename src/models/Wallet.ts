@@ -14,19 +14,24 @@ class Wallet {
 }
 
 export const createWallet = async (
-    user_id: number,
+    userId: number,
     walletAddress: string,
     balance: number
 ): Promise<void> => {
     const knex = await createKnexConnection();
-    Logger.info(user_id + "from createWalllet");
     await knex!("wallets").insert([
         {
-            user_id: user_id,
+            user_id: userId,
             address: walletAddress,
             balance: balance,
         },
     ]);
+};
+
+export const findAuthUserWallet = async (userId: number) => {
+    const knex = await createKnexConnection();
+    const wallet = await knex!("wallets").select().where({ user_id: userId });
+    return wallet[0];
 };
 
 export default Wallet;
