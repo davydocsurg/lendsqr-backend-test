@@ -18,7 +18,7 @@
     "author": "David Ndubuisi",
     "license": "MIT",
     "engines": {
-        "node": ">=17"
+        "node": ">=18 <19"
     },
     "dependencies": {
         "@types/knex": "^0.16.1",
