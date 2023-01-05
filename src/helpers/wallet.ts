@@ -19,6 +19,16 @@ export const checkWalletBalance = async (balance: number): Promise<boolean> => {
     return true;
 };
 
+export const compareWalletBalanceWithAmount = async (
+    balance: number,
+    amount: number
+): Promise<boolean> => {
+    if (balance < amount) {
+        return false;
+    }
+    return true;
+};
+
 export const isAmountLessThanTwoDollar = (
     amount: number,
     next: NextFunction

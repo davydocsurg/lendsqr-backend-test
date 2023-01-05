@@ -1,4 +1,4 @@
-import { NextFunction } from "express";
+import { NextFunction, Request } from "express";
 import { createKnexConnection } from "../../config";
 import { AppError, Logger } from "../helpers";
 import { WalletType } from "../types";
@@ -66,6 +66,7 @@ export const updateWalletBalance = async (
 };
 
 export const transferFunds = async (
+    req: Request,
     receiverEmail: string,
     amount: number,
     next: NextFunction
@@ -77,12 +78,12 @@ export const transferFunds = async (
     }
 
     // deduct amount from sender wallet
-    const senderWallet = await findUserWallet(req.user.id, next);
+    const senderWallet = await findUserWallet(req.user[0].id, next);
     let senderWalletUpdateType = "deduct";
     await updateWalletBalance(senderWallet!, amount, senderWalletUpdateType);
 
     // add amount to receiver wallet
-    const receiverWallet = await findUserWallet(receiver, next);
+    const receiverWallet = await findUserWallet(receiver.id, next);
     let receiverWalletUpdateType = "add";
     await updateWalletBalance(
         receiverWallet!,

@@ -4,6 +4,7 @@ import { NextFunction, Request, Response } from "express";
 import {
     AppError,
     checkWalletBalance,
+    compareWalletBalanceWithAmount,
     isAmountLessThanTwoDollar,
     Logger,
 } from "../helpers";
@@ -76,13 +77,16 @@ class WalletController {
 
             // check if auth user has sufficient funds
             const wallet = await findUserWallet(id, next);
-            const sufficientFunds = await checkWalletBalance(wallet?.balance!);
+            const sufficientFunds = await compareWalletBalanceWithAmount(
+                wallet?.balance!,
+                amount
+            );
             if (!sufficientFunds) {
                 return next(new AppError("Insufficient Funds", 400));
             }
 
             // initiate transaction
-            await transferFunds(email, amount, next);
+            await transferFunds(req, email, amount, next);
 
             return res.status(201).json({
                 success: true,
