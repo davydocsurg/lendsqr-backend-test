@@ -1,5 +1,6 @@
 import {
     DB_PORT,
+    PROD_DB_PORT,
     JWT_SECRET,
     MAX_AMOUNT,
     MIN_AMOUNT,
@@ -10,6 +11,7 @@ import config from "./constants";
 
 export {
     DB_PORT,
+    PROD_DB_PORT,
     JWT_SECRET,
     MAX_AMOUNT,
     MIN_AMOUNT,

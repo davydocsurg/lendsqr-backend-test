@@ -1,4 +1,5 @@
 export const DB_PORT = 8889;
+export const PROD_DB_PORT = 3306;
 export const JWT_SECRET = "@davydocsurg@Mobile";
 export const MIN_AMOUNT = 1;
 export const MAX_AMOUNT = 1;
