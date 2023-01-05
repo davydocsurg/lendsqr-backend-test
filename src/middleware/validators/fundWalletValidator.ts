@@ -29,9 +29,15 @@ export const verifyFundTransferDetails = (
     res: Response,
     next: NextFunction
 ) => {
-    verifyAmount(req, res, next);
+    // verifyAmount(req, res, next);
     return validate(
         [
+            check("amount")
+                .exists({
+                    checkNull: true,
+                    checkFalsy: true,
+                })
+                .withMessage("Amount is required"),
             check("receiver_email")
                 .exists({
                     checkNull: true,

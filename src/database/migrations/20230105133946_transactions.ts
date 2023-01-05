@@ -7,12 +7,14 @@ export async function up(knex: Knex): Promise<void> {
             .string("sender_email", 255)
             .notNullable()
             .references("email")
-            .inTable("users");
+            .inTable("users")
+            .onDelete("CASCADE");
         table
             .string("receiver_email", 255)
             .notNullable()
             .references("email")
-            .inTable("users");
+            .inTable("users")
+            .onDelete("CASCADE");
         table.string("description", 255).notNullable();
         table.integer("amount").notNullable();
         table.timestamp("created_at").defaultTo(knex.fn.now());

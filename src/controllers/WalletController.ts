@@ -13,6 +13,7 @@ import {
     updateWalletBalance,
     findUserByEmail,
     transferFunds,
+    createTransaction,
 } from "../models";
 
 class WalletController {
@@ -87,6 +88,7 @@ class WalletController {
 
             // initiate transaction
             await transferFunds(req, receiver_email, amount, next);
+            await createTransaction(req, receiver_email, description, amount);
 
             return res.status(201).json({
                 success: true,
@@ -99,7 +101,7 @@ class WalletController {
             Logger.error("An error occured: " + error);
             return res.json({
                 success: false,
-                message: error,
+                errors: error,
             });
         }
     }

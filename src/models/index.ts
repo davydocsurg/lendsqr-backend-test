@@ -5,6 +5,7 @@ import Wallet, {
     updateWalletBalance,
     transferFunds,
 } from "./Wallet";
+import { createTransaction } from "./Transaction";
 
 export {
     createUser,
@@ -13,6 +14,7 @@ export {
     findUserWallet,
     updateWalletBalance,
     transferFunds,
+    createTransaction,
     User,
     Wallet,
 };
