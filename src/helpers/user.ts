@@ -16,18 +16,6 @@ export const checkUser = async (email: string): Promise<boolean> => {
     return false;
 };
 
-export const findUserByEmail = async (
-    email: string
-): Promise<UserType | any> => {
-    const knex = await createKnexConnection();
-
-    const user = await knex!("users").select().where({ email: email });
-    if (user.length > 0) {
-        return user[0];
-    }
-    return null;
-};
-
 export const comparePassword = async (
     user: UserType,
     password: string

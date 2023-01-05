@@ -2,13 +2,12 @@ import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcryptjs";
 
 // local imports
-import { createUser, createWallet } from "../models";
+import { createUser, createWallet, findUserByEmail } from "../models";
 import {
     AppError,
     checkUser,
     comparePassword,
     createUserToken,
-    findUserByEmail,
     generateWalletAddress,
     Logger,
 } from "../helpers";

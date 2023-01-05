@@ -1,14 +1,15 @@
-import User, { createUser } from "./User";
+import User, { createUser, findUserByEmail } from "./User";
 import Wallet, {
     createWallet,
-    findAuthUserWallet,
+    findUserWallet,
     updateWalletBalance,
 } from "./Wallet";
 
 export {
     createUser,
+    findUserByEmail,
     createWallet,
-    findAuthUserWallet,
+    findUserWallet,
     updateWalletBalance,
     User,
     Wallet,
