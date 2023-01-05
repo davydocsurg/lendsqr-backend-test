@@ -1,25 +1,31 @@
 import { NextFunction, Request, Response } from "express";
 import { AppError, checkWalletBalance, Logger } from "../helpers";
-import { findAuthUserWallet } from "../models";
+import { findAuthUserWallet, updateWalletBalance } from "../models";
 
 class WalletController {
     constructor() {
-        this.fundWallet = this.fundWallet.bind(this);
+        this.fundAuthUserWallet = this.fundAuthUserWallet.bind(this);
     }
 
-    async fundWallet(req: Request, res: Response, next: NextFunction) {
+    async fundAuthUserWallet(req: Request, res: Response, next: NextFunction) {
         try {
             const { amount } = req.body;
             const { id } = req.user[0];
             const wallet = await findAuthUserWallet(id);
-            Logger.success("Wallet found: " + wallet.address);
-            const sufficientFunds = await checkWalletBalance(wallet.balance);
-            if (!sufficientFunds) {
-                return next(new AppError("Insufficient Funds", 400));
+            // const sufficientFunds = await checkWalletBalance(wallet.balance);
+            // if (!sufficientFunds) {
+            //     return next(new AppError("Insufficient Funds", 400));
+            // }
+            if (amount < 2) {
+                return next(
+                    new AppError("Amount must be greater than $1", 400)
+                );
             }
+            const newBalance = await updateWalletBalance(wallet, amount);
+
             return res.status(200).json({
                 success: true,
-                data: "yea",
+                message: `$${amount} has been added to your wallet. Your new balance is $${newBalance}`,
             });
         } catch (error: unknown) {
             Logger.error("An error occured: " + error);

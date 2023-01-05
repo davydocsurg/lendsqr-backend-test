@@ -1,5 +1,6 @@
 import { createKnexConnection } from "../../config";
 import { Logger } from "../helpers";
+import { WalletType } from "../types";
 
 class Wallet {
     address: string;
@@ -32,6 +33,18 @@ export const findAuthUserWallet = async (userId: number) => {
     const knex = await createKnexConnection();
     const wallet = await knex!("wallets").select().where({ user_id: userId });
     return wallet[0];
+};
+
+export const updateWalletBalance = async (
+    wallet: WalletType,
+    amount: number
+): Promise<number> => {
+    const knex = await createKnexConnection();
+    const newBalance = +wallet.balance + amount;
+    await knex!("wallets")
+        .where({ id: wallet.id })
+        .update({ balance: newBalance });
+    return newBalance;
 };
 
 export default Wallet;
