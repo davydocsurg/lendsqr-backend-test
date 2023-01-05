@@ -6,7 +6,9 @@
     "scripts": {
         "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
         "test": "jest",
-        "build": "ts-node"
+        "build": "ts-node",
+        "migrate": "knex migrate:latest",
+        "seed": "knex seed:run"
     },
     "keywords": [
         "typescript",
