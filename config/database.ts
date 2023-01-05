@@ -11,7 +11,7 @@ export const createKnexConnection = async () => {
     Logger.info("Creating knex connection...");
     try {
         const knex = Knex.default(
-            KnexConfig["production"] //process.env.NODE_ENV ||
+            KnexConfig[process.env.NODE_ENV || "development"]
         );
 
         const dbHandshake = await knex.raw("SELECT VERSION()");
