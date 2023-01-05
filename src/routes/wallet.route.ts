@@ -1,7 +1,11 @@
 import express from "express";
 import { WalletController } from "../controllers";
 import { catchAsync } from "../helpers";
-import { verifyAmount, isAuthenticated } from "../middleware";
+import {
+    verifyAmount,
+    isAuthenticated,
+    verifyFundTransferDetails,
+} from "../middleware";
 
 const walletRoutes = express.Router();
 
@@ -15,7 +19,7 @@ walletRoutes.post(
 walletRoutes.post(
     "/transfer-funds",
     isAuthenticated,
-    verifyAmount,
+    verifyFundTransferDetails,
     catchAsync(WalletController.transferFundsToAnotherUser)
 );
 

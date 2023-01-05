@@ -23,3 +23,31 @@ export const verifyAmount = (
         next
     );
 };
+
+export const verifyFundTransferDetails = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    verifyAmount(req, res, next);
+    return validate(
+        [
+            check("receiver_email")
+                .exists({
+                    checkNull: true,
+                    checkFalsy: true,
+                })
+                .withMessage("Receiver email is required"),
+
+            check("description")
+                .exists({
+                    checkNull: true,
+                    checkFalsy: true,
+                })
+                .withMessage("Description is required"),
+        ],
+        req,
+        res,
+        next
+    );
+};

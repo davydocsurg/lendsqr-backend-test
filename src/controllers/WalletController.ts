@@ -57,13 +57,13 @@ class WalletController {
         next: NextFunction
     ) {
         try {
-            const { amount, email } = req.body;
+            const { amount, receiver_email, description } = req.body;
             const { id } = req.user[0];
 
             isAmountLessThanTwoDollar(amount, next);
 
             // check if user exists
-            const userExists = await findUserByEmail(email);
+            const userExists = await findUserByEmail(receiver_email);
             if (!userExists) {
                 return next(new AppError("User does not exist", 404));
             } else if (userExists.email === req.user[0].email) {
@@ -86,7 +86,7 @@ class WalletController {
             }
 
             // initiate transaction
-            await transferFunds(req, email, amount, next);
+            await transferFunds(req, receiver_email, amount, next);
 
             return res.status(201).json({
                 success: true,
