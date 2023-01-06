@@ -1,36 +1,51 @@
 import assert from "assert";
 import { createKnexConnection } from "../../../config";
 
-describe("Authentication", () => {
-    // beforeEach(async () => {
-    //     const knex = await createKnexConnection();
-    //     // create test users in the database
-    //     await knex!("users").insert([
-    //         { email: "test@demowallet.com", password: "password1" },
-    //         { email: "test1@demowallet.com", password: "password2" },
-    //     ]);
-    // });
+import * as request from "supertest";
+import app from "../../app";
 
-    // afterEach(async () => {
-    //     const knex = await createKnexConnection();
-    //     // clear test users from the database
-    //     await knex!("users").del();
-    // });
+// // Create a Knex client
+// createKnexConnection();
 
-    it("should return true for successful login", async () => {
-        const res = await loginUser("doe@gmail.com", "password1");
-        assert(res === true);
-    });
+// beforeAll(async () => {
+//     // get knex instance
+//     const knex = await createKnexConnection();
 
-    it("should return false for failed login", async () => {
-        const res = await loginUser("doe@gmail.com", "wrong password");
-        assert(res === false);
+//     // Create a test user
+//     await knex!("users").insert([
+//         {
+//             first_name: "Test",
+//             last_name: "User",
+//             email: "test@example.com",
+//             password: "mypassword",
+//         },
+//     ]);
+// });
+
+// afterAll(async () => {
+//     // get knex instance
+//     const knex = await createKnexConnection();
+
+//     // Clean up by deleting the test user
+//     await knex!("users").where("email", "test@example.com").del();
+//     // Close the Knex client
+//     await knex!.destroy();
+// });
+
+const loginDetails = JSON.stringify({
+    email: "doe@gmail.com",
+    password: "password",
+});
+// jest.setTimeout(100000);
+
+describe(`POST /api/login`, () => {
+    it("logs in a user and returns a token and logged in user's data", async () => {
+        const response = await request
+            .default(app)
+            .post("/api/login")
+            .send(loginDetails);
+
+        expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty("token");
     });
 });
-
-const loginUser = async (email: string, password: string) => {
-    const knex = await createKnexConnection();
-
-    const rows = await knex!("users").select().where({ email });
-    return rows.length > 0;
-};
