@@ -1,7 +1,4 @@
-import assert from "assert";
-import { createKnexConnection } from "../../../config";
-
-import * as request from "supertest";
+import request from "supertest";
 import app from "../../app";
 
 // // Create a Knex client
@@ -36,16 +33,32 @@ const loginDetails = JSON.stringify({
     email: "doe@gmail.com",
     password: "password",
 });
-// jest.setTimeout(100000);
+jest.setTimeout(50000);
 
 describe(`POST /api/login`, () => {
-    it("logs in a user and returns a token and logged in user's data", async () => {
-        const response = await request
-            .default(app)
+    // test("logs in a user and returns a token and logged in user's data", async () => {
+    it("should return a token and user when login is successful", async () => {
+        const response = await request(app)
             .post("/api/login")
             .send(loginDetails);
 
         expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty("token");
+        expect(response.body).toMatchObject({
+            success: true,
+            data: {
+                token: expect.any(String),
+                user: {
+                    id: 2,
+                    first_name: expect.any(String),
+                    last_name: expect.any(String),
+                    email: expect.any(String),
+                    password: expect.any(String),
+                    created_at: expect.any(String),
+                    updated_at: expect.any(String),
+                },
+            },
+            message: "Login successful",
+        });
+        return response;
     });
 });
