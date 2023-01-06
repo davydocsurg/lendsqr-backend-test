@@ -17,47 +17,47 @@ This API provides a service for creating and managing virtual wallets. Users can
 
 1. Clone this repository
 
-> ```bash
-> git clone https://github.com/davydocsurg/lendsqr-backend-test.git
-> ```
+```bash
+git clone https://github.com/davydocsurg/lendsqr-backend-test.git
+```
 
 2. Navigate to the project directory:
 
-> ```bash
-> cd lendsqr-backend-test
-> ```
+```bash
+cd lendsqr-backend-test
+```
 
 3. Install the dependencies:
 
-> ```bash
-> npm install
-> ```
+```bash
+npm install
+```
 
 4. Set up the database
 
 -   Create a new database for the wallet service.
 -   Run the following command in your project's root folder:
 
-> ```bash
-> cp .env.example .env
-> ```
+```bash
+cp .env.example .env
+```
 
 P.S: The above command creates a `.env` file and populates it with the necessary environment variables.
 
 -   Update the `.env` file with your database credentials.
 -   Run the following command to create the necessary tables:
 
-> ```bash
-> npm run migrate
-> ```
+```bash
+npm run migrate
+```
 
 ## Running the API
 
 1. Start the API server:
 
-> ```bash
-> npm run dev
-> ```
+```bash
+npm run dev
+```
 
 The API will be running at http://localhost:8080.
 
