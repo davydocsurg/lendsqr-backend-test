@@ -55,4 +55,17 @@ describe("POST /api/transfer-funds", () => {
         expect(response.status).toBe(401);
         expect(response.body).toHaveProperty("error");
     });
+
+    test("should return an error if amount is greater than the user's wallet balance", async () => {
+        const response = await request(app)
+            .post("/api/transfer-funds")
+            .set({
+                Accept: "application/json",
+            })
+            .send(data);
+
+        expect(transferFunds).toHaveBeenCalledTimes(0);
+        expect(response.status).toBe(401);
+        expect(response.body).toHaveProperty("error");
+    });
 });
