@@ -244,6 +244,14 @@ Bearer Token: {{ AUTH_TOKEN }}
 
 -   On error: HTTP status 400
 
+## Running tests
+
+### Run the following command to run tests
+
+```bash
+npm run test
+```
+
 ### License
 
 This API is released under the MIT License. See [LICENSE](https://chibueze.me) for details.
