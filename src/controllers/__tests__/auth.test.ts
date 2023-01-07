@@ -55,6 +55,11 @@ describe("POST /api/register", () => {
 });
 
 describe(`POST /api/login`, () => {
+    beforeEach(() => {
+        loginUser.mockClear();
+        loginUser.mockResolvedValue(0);
+    });
+
     test("should return a message when login is successful", async () => {
         const response = await request
             .default(app)
