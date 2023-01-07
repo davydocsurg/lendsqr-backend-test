@@ -35,6 +35,11 @@ npm install
 
 4. Set up the database
 
+Below is the E-R diagram of the database:
+![E-R Diagram](./public/images/e-r-diagram.png)
+
+Here's the link to the [documentation](https://sqlspy.io/import_db_designer/c3B5LTM2MzY4NzctMjA5ODgwNjQ2M2IzMWExMC01OTA4MTA=)
+
 -   Create a new database for the wallet service.
 -   Run the following command in your project's root folder:
 
